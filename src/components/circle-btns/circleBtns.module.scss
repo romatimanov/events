@@ -1,0 +1,33 @@
+.disabled {
+  opacity: 0.5;
+}
+.circleBtns {
+  display: flex;
+  gap: 20px;
+}
+.mainBtns {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 20px;
+  grid-column: 5/8;
+  grid-row: 1;
+  @media (max-width: 1024px) {
+    order: 3;
+  }
+}
+.btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 1px solid #42567a;
+  background: none;
+}
+.counter {
+  color: #42567a;
+  font-size: 14px;
+}

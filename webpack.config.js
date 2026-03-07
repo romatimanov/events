@@ -29,6 +29,11 @@ module.exports = {
       },
 
       {
+        test: /\.(png|jpg|jpeg|gif|svg)$/i,
+        type: 'asset/resource'
+      },
+
+      {
         test: /\.(css|scss)$/i,
         oneOf: [
           {

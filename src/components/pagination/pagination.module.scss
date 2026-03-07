@@ -1,0 +1,22 @@
+.pagination {
+  display: none;
+  justify-content: center;
+  gap: 10px;
+  @media (max-width: 1024px) {
+    display: flex;
+  }
+}
+
+.bullet {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #42567a;
+  opacity: 0.3;
+  border: none;
+  cursor: pointer;
+}
+
+.active {
+  opacity: 1;
+}

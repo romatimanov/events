@@ -3,7 +3,8 @@ import style from './circle.module.scss'
 import Dates from '@/components/date/dates'
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
-const points = [
+
+export const points = [
   { id: 1, start: 1990, end: 1996, name: 'История' },
   { id: 2, start: 1996, end: 2002, name: 'Литература' },
   { id: 3, start: 2002, end: 2008, name: 'Кино' },

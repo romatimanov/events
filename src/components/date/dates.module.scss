@@ -8,8 +8,12 @@
   gap: 20px;
   justify-content: space-between;
   width: 100%;
-  font-size: 160px;
+  font-size: clamp(58px, 10vw, 160px);
   font-weight: 700;
+  @media (max-width: 1024px) {
+    justify-content: center;
+    gap: 60px;
+  }
 }
 .dateTextStart {
   color: #5d5fef;
