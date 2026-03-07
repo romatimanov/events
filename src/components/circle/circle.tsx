@@ -1,32 +1,42 @@
-import { useState } from 'react'
+import { useCircleStore } from '@/store/store'
 import style from './circle.module.scss'
+import Dates from '@/components/date/dates'
+import { useEffect, useRef } from 'react'
+import { gsap } from 'gsap'
+const points = [
+  { id: 1, start: 1990, end: 1996, name: 'История' },
+  { id: 2, start: 1996, end: 2002, name: 'Литература' },
+  { id: 3, start: 2002, end: 2008, name: 'Кино' },
+  { id: 4, start: 2008, end: 2014, name: 'Музыка' },
+  { id: 5, start: 2014, end: 2020, name: 'Технологии' },
+  { id: 6, start: 2020, end: 2026, name: 'Наука' }
+]
 
 export default function Circle() {
-  const points = [
-    { id: 1, start: 2010, end: 2016 },
-    { id: 2, start: 2013, end: 2019 },
-    { id: 3, start: 2016, end: 2022 },
-    { id: 4, start: 2019, end: 2025 },
-    { id: 5, start: 2022, end: 2028 },
-    { id: 6, start: 2025, end: 2031 }
-  ]
+  const { active, rotation, startDate, endDate, setActive, setRotation, setStartDate, setEndDate } =
+    useCircleStore()
+  const isFirstRender = useRef(true)
+  const activeNameRef = useRef<HTMLSpanElement | null>(null)
 
-  const [active, setActive] = useState(6)
-  const [rotation, setRotation] = useState(0)
-  const [startDate, setStartDate] = useState(2025)
-  const [endDate, setEndDate] = useState(2031)
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false
+      gsap.set(activeNameRef.current, { opacity: 1 })
+      return
+    }
 
-  const animateNumber = (from: number, to: number, setter: (v: number) => void) => {
-    const step = from < to ? 1 : -1
-    let current = from
-
-    const interval = setInterval(() => {
-      current += step
-      setter(current)
-
-      if (current === to) clearInterval(interval)
-    }, 40)
-  }
+    gsap.fromTo(
+      activeNameRef.current,
+      { opacity: 0, x: -10 },
+      {
+        opacity: 1,
+        x: 0,
+        delay: 1,
+        duration: 0.5,
+        ease: 'power2.out'
+      }
+    )
+  }, [active])
 
   const handleClick = (point: (typeof points)[number], index: number) => {
     if (point.id === active) return
@@ -36,11 +46,25 @@ export default function Circle() {
 
     const diff = activeIndex - index
 
-    setRotation((prev) => prev + diff * step)
+    setRotation(rotation + diff * step)
     setActive(point.id)
 
-    animateNumber(startDate, point.start, setStartDate)
-    animateNumber(endDate, point.end, setEndDate)
+    const startObj = { value: startDate }
+    const endObj = { value: endDate }
+
+    gsap.to(startObj, {
+      value: point.start,
+      duration: 1,
+      ease: 'power1.out',
+      onUpdate: () => setStartDate(Math.round(startObj.value))
+    })
+
+    gsap.to(endObj, {
+      value: point.end,
+      duration: 1,
+      ease: 'power1.out',
+      onUpdate: () => setEndDate(Math.round(endObj.value))
+    })
   }
 
   return (
@@ -57,19 +81,17 @@ export default function Circle() {
             style={{ '--i': i } as React.CSSProperties}
           >
             <span className={style.circleText}>{point.id}</span>
+
+            {active === point.id && (
+              <span ref={activeNameRef} className={style.circleName}>
+                {point.name}
+              </span>
+            )}
           </span>
         ))}
       </div>
 
-      <div className={style.dates}>
-        <div className={style.startDate}>
-          <span className={style.dateText}>{startDate}</span>
-        </div>
-
-        <div className={style.endDate}>
-          <span className={style.dateText}>{endDate}</span>
-        </div>
-      </div>
+      <Dates />
     </div>
   )
 }

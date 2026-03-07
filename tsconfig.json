@@ -8,7 +8,10 @@
     "sourceMap": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "baseUrl": "./src"
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["*"]
+    }
   },
   "include": ["src"]
 }

@@ -1,16 +1,21 @@
 .containerCircle {
   position: relative;
+  width: 940px;
+  height: 530px;
+  grid-row: 1;
+  grid-column: 6/24;
 }
 .circle {
   position: relative;
   width: 530px;
   height: 530px;
   border-radius: 50%;
-  border: 1px solid #42567a;
+  border: 1px solid #42567a37;
   margin: 0 auto;
   --rotation: 0deg;
   transform: rotate(var(--rotation));
   transition: transform 1s ease;
+  z-index: 10;
 }
 
 .circleNum {
@@ -20,7 +25,6 @@
   left: 50%;
   --count: 6;
   --angle: calc(360deg / var(--count) * var(--i));
-
   transform: translate(-50%, -50%) rotate(var(--angle)) translate(265px)
     rotate(calc(-1 * var(--angle))) rotate(calc(-1 * var(--rotation)));
 
@@ -88,10 +92,15 @@
   opacity: 1;
   transform: scale(1);
 }
-.dates {
+
+.circleName {
   position: absolute;
+  left: calc(50% + 50px);
   top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 20px;
+  transform: translateY(-50%);
+  opacity: 0;
+  white-space: nowrap;
+  font-size: 18px;
+  font-weight: 500;
+  color: #42567a;
 }
